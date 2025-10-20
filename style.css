@@ -225,3 +225,57 @@ body {
 .flower-animation.animate .ribbon {
     opacity: 1;
 }
+
+/* --- Cập nhật cho Ảnh GIF và Lời Chúc Cuối --- */
+
+.surprise-display {
+    position: fixed; /* Đặt ở giữa màn hình */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 90%; /* Phù hợp mobile */
+    max-width: 450px;
+    z-index: 20;
+    
+    /* Hiệu ứng mờ dần (Opacity 0 ban đầu) */
+    opacity: 0;
+    transition: opacity 2s ease-in; /* Thời gian hiện ra từ từ: 2 giây */
+}
+
+.surprise-display.hidden-gif {
+    opacity: 0 !important;
+    visibility: hidden;
+}
+
+.surprise-display.show-gif {
+    opacity: 1 !important;
+    visibility: visible;
+}
+
+.surprise-gif {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.final-message {
+    font-size: 1.8em; /* Kích thước chữ lớn */
+    font-weight: bold;
+    color: #ff69b4; /* Màu hồng */
+    margin-top: 20px;
+    animation: pulse 1.5s infinite; /* Thêm hiệu ứng nhấp nháy nhẹ */
+}
+
+/* Animation nhấp nháy cho lời chúc cuối */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Giữ nguyên CSS gốc cho khung chữ nhật màu hồng nhạt và nền */
