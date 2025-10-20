@@ -29,28 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Xử lý sự kiện bấm nút
      */
-    surpriseButton.addEventListener('click', () => {
+   surpriseButton.addEventListener('click', () => {
         // Ẩn khung chữ nhật
         cardContainer.style.opacity = '0';
         
         // Sau khi khung chữ nhật ẩn xong (1 giây), bắt đầu animation hoa
         setTimeout(() => {
             cardContainer.style.display = 'none'; // Ẩn hoàn toàn
-            
-            // Hiện khu vực hoa và chạy animation
-            flowerAnimation.classList.remove('hidden');
-            
-            // Đặt lại vị trí để bó hoa nằm giữa màn hình
-            flowerAnimation.style.position = 'fixed';
-            flowerAnimation.style.top = '50%';
-            flowerAnimation.style.left = '50%';
-            flowerAnimation.style.transform = 'translate(-50%, -50%)';
 
-            // Kích hoạt animation CSS
+            // 1. Hiển thị nền trắng (bouquet-stage) và bó hoa
+            flowerAnimation.classList.add('show');
+            
+            // 2. Kích hoạt animation CSS (giấy gói, hoa, thân cây)
             setTimeout(() => {
                 flowerAnimation.classList.add('animate');
-            }, 50); // Độ trễ nhỏ để đảm bảo lớp 'hidden' đã bị loại bỏ
-
+            }, 50); // Độ trễ nhỏ để đảm bảo hiển thị đúng
+            
         }, 1000); // 1000ms (1 giây) khớp với thời gian transition opacity của card
     });
 });

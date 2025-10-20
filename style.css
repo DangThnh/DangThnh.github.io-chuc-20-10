@@ -92,75 +92,136 @@ body {
 
 /* --- Animation Bó Hoa (Rose Bouquet) --- */
 
+/* --- Animation Bó Hoa (Rose Bouquet) --- */
+
 .flower-animation {
-    position: relative;
-    width: 200px; /* Kích thước bó hoa */
-    height: 300px;
+    position: fixed; /* Đảm bảo nằm giữa màn hình */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 20;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-}
-
-.hidden {
-    opacity: 0 !important;
+    opacity: 0; /* Ban đầu ẩn */
+    transition: opacity 1s ease-in-out, visibility 1s;
     visibility: hidden;
-    height: 0;
 }
 
+.flower-animation.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Nền trắng bao quanh bó hoa */
+.bouquet-stage {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background-color: white; /* Nền trắng */
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Đặt bó hoa phía dưới */
+    overflow: hidden;
+}
+
+/* Giấy gói hoa (Wrapper) */
+.wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 200px;
+    height: 250px;
+    background-color: #f7b7cf; /* Màu giấy gói */
+    border-radius: 50% / 0 0 100% 100%;
+    transform-origin: bottom center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 1.5s ease-out;
+    opacity: 0; /* Ban đầu ẩn */
+}
+
+.wrapper-1 { background-color: #f4a7c0; width: 220px; height: 280px; transform: rotate(0deg); opacity: 0; transition-delay: 1.5s; }
+.wrapper-2 { background-color: #f7b7cf; width: 180px; height: 240px; transform: rotate(-10deg); left: 20px; opacity: 0; transition-delay: 1.7s; }
+.wrapper-3 { background-color: #f4a7c0; width: 180px; height: 240px; transform: rotate(10deg); right: 20px; opacity: 0; transition-delay: 1.7s; }
+
+/* Ruy băng */
+.ribbon {
+    position: absolute;
+    bottom: 10px;
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(45deg, #ff007f, #e34fa6);
+    border-radius: 5px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.8s ease 3.5s; /* Hiện ruy băng sau cùng */
+}
+
+/* Container cho từng bông hoa (để dễ định vị) */
+.rose-container {
+    position: absolute;
+    bottom: 50px;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* Vị trí các cụm hoa */
+.rose-pos-1 { left: 120px; bottom: 180px; transition-delay: 2.0s; } /* Trung tâm */
+.rose-pos-2 { left: 50px; bottom: 150px; transition-delay: 2.5s; } /* Trái dưới */
+.rose-pos-3 { left: 190px; bottom: 150px; transition-delay: 3.0s; } /* Phải dưới */
+.rose-pos-4 { left: 100px; bottom: 250px; transition-delay: 3.2s; } /* Trên cùng */
+
+/* Kích thước hoa ngẫu nhiên */
+.small-rose { transform: scale(0.7); }
+.large-rose { transform: scale(1.2); }
+
+/* Thân cây */
 .stem {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 10px;
-    height: 0; /* Bắt đầu từ 0 */
-    background-color: #38761d; /* Xanh lá */
-    border-radius: 5px 5px 0 0;
-    transition: height 1.5s ease-out; /* Hiệu ứng mọc thân */
+    width: 6px;
+    height: 100px; /* Chiều dài thân cố định */
+    background-color: #38761d;
+    border-radius: 5px;
+    opacity: 0; /* Ban đầu ẩn */
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* Hoa Hồng - Ban đầu ẩn (opacity 0) */
+/* Hình dáng Hoa Hồng - Sử dụng nhiều cánh hoa (petals) */
 .rose {
-    position: absolute;
+    position: relative;
     width: 50px;
     height: 50px;
-    background-color: #ff007f; /* Đỏ hồng */
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
-    opacity: 0; /* Ban đầu ẩn */
-    transform: scale(0); /* Bắt đầu nhỏ */
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    margin-bottom: -5px;
 }
 
-/* Định vị và delay cho từng bông hoa */
-.rose-1 { top: 50px; left: 75px; z-index: 5; }
-.rose-2 { top: 80px; left: 30px; z-index: 4; }
-.rose-3 { top: 80px; left: 120px; z-index: 4; }
-.rose-4 { top: 120px; left: 50px; z-index: 3; }
-.rose-5 { top: 120px; left: 100px; z-index: 3; }
-
-.ribbon {
+.petal {
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 30px;
-    background: linear-gradient(45deg, #f06, #ff8c00);
-    border-radius: 5px;
-    z-index: 6;
-    opacity: 0;
-    transition: opacity 0.5s ease 2s; /* Hiện ruy băng sau cùng */
+    background-color: #ff007f; /* Màu hoa */
+    border-radius: 50% 50% 0 50%; /* Tạo hình dáng cánh hoa */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
+.p-1 { top: 0; left: 15px; width: 30px; height: 30px; transform: rotate(-30deg); background-color: #ff40ab;}
+.p-2 { top: 10px; left: 30px; width: 25px; height: 25px; transform: rotate(60deg); }
+.p-3 { top: 20px; left: 5px; width: 20px; height: 20px; transform: rotate(180deg); background-color: #ff40ab;}
+.p-4 { top: 35px; left: 20px; width: 15px; height: 15px; transform: rotate(-90deg); }
+
 
 /* CSS cho animation khi JS thêm class 'animate' */
-.flower-animation.animate .stem {
-    height: 150px; /* Chiều cao thân cây cuối cùng */
+.flower-animation.animate .wrapper {
+    opacity: 1;
+    transform: rotate(0deg) scaleY(1); /* Hiện lớp giấy gói */
 }
 
-.flower-animation.animate .rose-1 { transition-delay: 1.5s; opacity: 1; transform: scale(1); }
-.flower-animation.animate .rose-2 { transition-delay: 1.7s; opacity: 1; transform: scale(1); }
-.flower-animation.animate .rose-3 { transition-delay: 1.9s; opacity: 1; transform: scale(1); }
-.flower-animation.animate .rose-4 { transition-delay: 2.1s; opacity: 1; transform: scale(1); }
-.flower-animation.animate .rose-5 { transition-delay: 2.3s; opacity: 1; transform: scale(1); }
-.flower-animation.animate .ribbon { opacity: 1; }
+.flower-animation.animate .rose-container {
+    opacity: 1; /* Hiện cụm hoa */
+}
+
+.flower-animation.animate .rose-container .stem {
+    opacity: 1; /* Hiện thân cây */
+}
+
+.flower-animation.animate .ribbon {
+    opacity: 1;
+}
